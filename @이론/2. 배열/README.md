@@ -10,8 +10,7 @@
 
 1. O(1)에 K번째 원소를 확인, 변경이 가능함.
 2. 다른 자료구조와 다르게 특정 작업에 추가적으로 소모되는 메모리 양이 거의 없다시피 함.
-3. Cache hit rate가 높다.
-   - Cache hit rate:
+3. [Cache hit rate](https://github.com/goldfrosch/algorithm-solve/blob/main/%40%EC%9D%B4%EB%A1%A0/1.%20%EC%BD%94%EB%93%9C%20%EC%9E%91%EC%84%B1%20%EC%9A%94%EB%A0%B9/%EA%B8%B0%ED%83%80%20%EC%9A%A9%EC%96%B4%20%EC%82%AC%EC%A0%84.md#cache-hit-rate)가 높다.
 4. 메모리 상에 연속된 구간을 잡아야해 할당에 제약이 있음.
 
 ### 배열의 계산 시간 복잡도
