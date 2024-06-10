@@ -5,48 +5,47 @@
 #include <algorithm>
 #include <cmath>
 #define endl '\n'
-#define MAX 5000000
 
 using namespace std;
 
-int n;
-int minFactor[MAX+1];
+const int MAX = 5000000;
 
-void updateFactor(){
-  for (int i=2; i<=MAX; i++)
-    minFactor[i] = i;
-  
-  for (int i=2; i<=sqrt(MAX); i++)
-    if (minFactor[i] == i)
-      for (int j=i*i; j<=MAX; j+=i)
-        if (minFactor[j] == j)
-          minFactor[j] = i;
+int N;
+int Prime[MAX + 1];
+
+void init(){
+    for (int i = 2; i <= MAX; i++)
+        Prime[i] = i;
+
+    for (int i = 2; i <= sqrt(MAX); i++)
+        if (Prime[i] == i)
+            for (int j = i * i; j <= MAX; j += i)
+                if (Prime[j] == j)
+                    Prime[j] = i;
 }
 
-void solve(int num){
-  while (num > 1){
-    cout << minFactor[num] << " ";
-    num /= minFactor[num];
-  }
-  cout << endl;
+void calc(int num){
+    while (num > 1){
+        cout << Prime[num] << " ";
+        num /= Prime[num];
+    }
+    cout << endl;
 }
 
-int main(){
-  ios_base :: sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
+int main() {
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-  // ifstream cin;
-  // cin.open("input.txt");
+    cin >> N;
 
-  cin >> n;
+    init();
 
-  updateFactor();
+    for (int i = 0; i < N; i++){
+        int num;
+        cin >> num;
+        calc(num);
+    }
 
-  for (int i=0; i<n; i++){
-    int num;
-    cin >> num;
-    solve(num);
-  }
-
+    return 0;
 }
