@@ -4,76 +4,58 @@
 using namespace std;
 
 int main() {
+    // https://www.acmicpc.net/problem/7432
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
     string N;
-    cin >> N;
+    std::cin >> N;
+
+    // wolf 관련 글자 정보 저장하는 Map 하나
+    // 다음 글자로 넘어갈 때 Map에서 이전 글자 정보 초기화
+    // 다음 글자로 넘어갈 때 그 다음 글자가 순서가 틀리다면 그대로 종료 (틀림)
 
     map<char, int> WolfMap;
-    char Prev = 'w';  // 시작 문자를 'w'로 설정
-    bool isFirstChar = true;
-
-    // 첫 글자가 'w'가 아니면 잘못된 문자열
-    if (N[0] != 'w') {
-        cout << "0";
-        return 0;
-    }
-
+    char Prev = 'f';
     for (int i = 0; i < N.length(); i++) {
-        char curr = N[i];
-        
-        // 현재 문자가 wolf 패턴에 없는 문자인 경우
-        if (curr != 'w' && curr != 'o' && curr != 'l' && curr != 'f') {
-            cout << "0";
+        // 혹시 모를 다른 글자에 대한 예외 처리
+        if (N[i] != 'w' && N[i] != 'o' && N[i] != 'l' && N[i] != 'f') {
+            printf("0");
             return 0;
         }
 
-        // 이전 문자와 같은 경우
-        if (curr == Prev) {
-            WolfMap[curr]++;
-        }
-        // 다른 문자가 나온 경우
-        else {
-            // 올바른 순서인지 확인
-            if ((Prev == 'w' && curr != 'o') || 
-                (Prev == 'o' && curr != 'l') || 
-                (Prev == 'l' && curr != 'f') || 
-                (Prev == 'f' && curr != 'w')) {
-                cout << "0";
+        if (Prev != N[i]) {
+            if ((Prev == 'w' && N[i] != 'o') || Prev == 'o' && N[i] != 'l'
+                || Prev == 'l' && N[i] != 'f' || Prev == 'f' && N[i] != 'w') {
+                printf("0");
                 return 0;
             }
 
-            // 'w'로 돌아올 때 이전 그룹의 카운트 검증
-            if (curr == 'w') {
-                if (WolfMap['w'] != WolfMap['o'] || 
-                    WolfMap['o'] != WolfMap['l'] || 
-                    WolfMap['l'] != WolfMap['f']) {
-                    cout << "0";
+            // 하나의 wolf 쌍이 완성되고 초기화 단계로 넘어가는 경우
+            if (N[i] == 'w') {
+                if (WolfMap['w'] != WolfMap['o'] || WolfMap['o'] != WolfMap['l'] || WolfMap['l'] != WolfMap['f']) {
+                    printf("0");
                     return 0;
                 }
-                WolfMap.clear();  // 새로운 그룹 시작시 카운트 초기화
+                WolfMap.clear();
             }
-
-            WolfMap[curr] = 1;  // 새로운 문자 카운트 시작
-            Prev = curr;
+            WolfMap[N[i]] == 1;
+            Prev = N[i];
+        } else {
+            WolfMap[Prev] += 1;
         }
     }
 
-    // 마지막 문자가 'f'가 아니면 잘못된 문자열
     if (Prev != 'f') {
-        cout << "0";
+        printf("0");
         return 0;
     }
 
-    // 최종 카운트 검증
-    if (WolfMap['w'] != WolfMap['o'] || 
-        WolfMap['o'] != WolfMap['l'] || 
-        WolfMap['l'] != WolfMap['f']) {
-        cout << "0";
-        return 0;
-    }
+    const bool Answer =
+        WolfMap['w'] == WolfMap['o']
+        && WolfMap['o'] == WolfMap['l']
+        && WolfMap['l'] == WolfMap['f'];
 
-    cout << "1";
+    printf("%d", Answer);
     return 0;
 }
