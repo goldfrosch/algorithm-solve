@@ -43,13 +43,6 @@ int R(const int& Data) {
     return NewData;
 }
 
-int GetNum(const char& i) {
-    if (i == 'D') return 0;
-    if (i == 'S') return 1;
-    if (i == 'L') return 2;
-    return 3;
-}
-
 int main() {
     // https://www.acmicpc.net/problem/9019
     ios_base::sync_with_stdio(false);
